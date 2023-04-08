@@ -98,16 +98,6 @@ function storeCities(city) {
 }}
 
 
-// TODO: update saved cities list to incude the searched city
-// TODO: append search function for quick search
-
-// TODO: take city name and send to geocoder api
-// TODO: return lat and longtiude data
-
-// TODO: send lat, lon to openweather
-// TODO: return: the current weather conditions and future weather conditions
-// TODO:   display city name, the date, an icon representation of weather
-// conditions, the temperature, the humidity, and the wind speed
 
 // TODO: create five day forcast display
 // TODO: create card element to display date (MM/DD/YYYY), weather icon,
