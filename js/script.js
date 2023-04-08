@@ -9,9 +9,9 @@ let key = '433504929c3f849b429bb998b8932527'
 
 // TODO: set up geocoder api to convert lat, lon to cities
 // http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
-function getLatLon(string, key){
+function getLatLon(city, key){
 
-    fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${key}1).then(function(response){
+    fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${key}`).then(function(response){
         console.log("response:", response)
         return response.json()
     }).then(function (data){
