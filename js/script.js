@@ -15,7 +15,8 @@ function getWeather(lat, lon, key, unit){
         let cityName = data.city.name
         // console.log("cityName:", cityName)
         // let futureWeather = something
-        // let date = dayjs.format(DDDD, MM YYYY)
+        let date = dayjs().format('MM/DD/YYYY')
+        console.log("date:", date)
         let icon = data.list[0].weather[0].icon
         console.log("icon:", icon)
         let temp = conditions.temp
