@@ -78,32 +78,26 @@ function getLatLon(city, key) {
 
 // function that pulls in the user input
 function getCityIn() {
-  let cityIn = document.querySelector("#city-input").value;
-  storeCities(cityIn)
-  cityIn.textContent = ''
-  return cityIn;
+  let cityIn = document.querySelector("#city-input");
+  let city = cityIn.value
+  storeCities(city)
+  cityIn.value = ''
+  return city;
 }
-// TODO: take user input from doc and store in local memory
-// let cityStorageArray = []
+// take user input from doc and store in local memory
 function storeCities(city) {
   if (!localStorage.getItem("cities")) {
     let cityStorage = []
     cityStorage.push(city)
     localStorage.setItem("cities", JSON.stringify(cityStorage));
 } else { 
-    console.log("test")
-    cityList = getCitiesList()
+    let cityList = JSON.parse(localStorage.getItem("cities"))
     console.log("cityList:", cityList)
     cityList.push(city)
     localStorage.setItem("cities", JSON.stringify(cityList));
-
-
 }}
 
-function getCitiesList() {
-    let cityStorage = JSON.parse(localStorage.getItem("cities"))
-    return cityStorage 
-}
+
 // TODO: update saved cities list to incude the searched city
 // TODO: append search function for quick search
 
