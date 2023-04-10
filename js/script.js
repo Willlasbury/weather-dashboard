@@ -16,9 +16,10 @@ function getCurrentWeather(lat, lon, key, unit) {
       let humidity = conditions.humidity;
       let windSpeed = data.list[0].wind.speed;
       let condArray = [temp, humidity, windSpeed]
-      // TODO:  append to main card
+      displayWeather(cityName, date, icon, condArray)
     });
 }
+
 
 // search data and pull out any data from noon
 function findNoon(string) {
@@ -104,24 +105,39 @@ function storeCities(city) {
 }
 
 // TODO: display current weather for searched city
-function diplayWeather(name, date, icon, condArray){
+function displayWeather(name, date, icon, condArray){
+  console.log("test")
+  // hold todays weather and five day forcast
   let weatherSec = document.querySelector('#weather-display')
+  
+  // create div for all of todays weather
   let todayWeather = document.createElement('article')
+  // TODO: add styling to today's weather
+  todayWeather.setAttribute('class', '')
+
+  // create weather conditions list
+  let condUl = document.createElement('ul')
+  // header for today's weather
   let cityDateH1 = document.createElement('h1')
   cityDateH1.textContent = `${name} (${date}) ${icon}`
   
+  
+  weatherSec.appendChild(todayWeather)
+  todayWeather.appendChild(cityDateH1)
+  todayWeather.appendChild(condUl)
+
   for (let i = 0; i < condArray.length; i++) {
     let condLi = document.createElement("li");
-    condLi.textContent = cityList[i];
+    condLi.textContent = condArray[i];
     condLi.setAttribute(
       "class",
-      "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded w-full my-3"
+      ""
     );
-    cityUl.appendChild(condLi);
+    condUl.appendChild(condLi);
   }
 
 }
-
+// displayWeather('test', 'test', 'test', 'test')
 
 // TODO: create five day forcast display
 
@@ -155,6 +171,7 @@ let searchBtn = document.querySelector("#search-btn");
 searchBtn.addEventListener("click", function (){
   getCityIn()
   displayCities()
+  getLatLon()
 });
 
 
