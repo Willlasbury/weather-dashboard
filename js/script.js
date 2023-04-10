@@ -15,8 +15,7 @@ function getCurrentWeather(lat, lon, key, unit) {
       let temp = conditions.temp;
       let humidity = conditions.humidity;
       let windSpeed = data.list[0].wind.speed;
-      let condArray = [temp, humidity, windSpeed]
-      displayWeather(cityName, date, icon, condArray)
+      displayWeather(cityName, date, icon, temp, humidity, windSpeed)
     });
 }
 
@@ -105,7 +104,7 @@ function storeCities(city) {
 }
 
 // TODO: display current weather for searched city
-function displayWeather(name, date, icon, condArray){
+function displayWeather(name, date, icon, temp, humidity, windSpeed){
   console.log("test")
   // hold todays weather and five day forcast
   let weatherSec = document.querySelector('#weather-display')
@@ -122,21 +121,22 @@ function displayWeather(name, date, icon, condArray){
   cityDateH1.textContent = `${name} (${date}) ${icon}`
   
   
+  let templi = document.createElement('li')
+  templi.textContent = `Temperature: ${temp}℉`
+  let humli = document.createElement('li')
+  humli.textContent = `Humidity: ${humidity}%`
+  let windli = document.createElement('li')
+  windli.textContent = `Wind Speed: ${windSpeed}mph`
+  
+  condUl.appendChild(templi);
+  condUl.appendChild(humli);
+  condUl.appendChild(windli);
   weatherSec.appendChild(todayWeather)
   todayWeather.appendChild(cityDateH1)
   todayWeather.appendChild(condUl)
-
-  for (let i = 0; i < condArray.length; i++) {
-    let condLi = document.createElement("li");
-    condLi.textContent = condArray[i];
-    condLi.setAttribute(
-      "class",
-      ""
-    );
-    condUl.appendChild(condLi);
   }
 
-}
+
 // displayWeather('test', 'test', 'test', 'test')
 
 // TODO: create five day forcast display
@@ -169,9 +169,9 @@ function displayCities() {
 // listen for searches and update cities and display
 let searchBtn = document.querySelector("#search-btn");
 searchBtn.addEventListener("click", function (){
-  getCityIn()
+  getLatLon(getCityIn(), key)
   displayCities()
-  getLatLon()
+  
 });
 
 
