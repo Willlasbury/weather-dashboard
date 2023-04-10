@@ -171,7 +171,7 @@ function displayCities() {
   // remove all buttons already displayed to prevent redundant buttons
   cityUl.textContent = "";
   let cityList = JSON.parse(localStorage.getItem("cities"));
-
+  if(cityList){
   for (let i = 0; i < cityList.length; i++) {
     let cityBtn = document.createElement("button");
     cityBtn.setAttribute("id", "quick-search");
@@ -185,7 +185,7 @@ function displayCities() {
     cityBtn.addEventListener("click", function () {
       getLatLon(quickSearch(), key);
       displayCities();
-    });
+    });}
   }
 }
 
