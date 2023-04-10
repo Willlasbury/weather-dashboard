@@ -1,5 +1,5 @@
 let key = "433504929c3f849b429bb998b8932527";
-
+// get the current weather conditions
 function getCurrentWeather(lat, lon, key, unit) {
   fetch(
     `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${key}&units=${unit}`
@@ -15,10 +15,12 @@ function getCurrentWeather(lat, lon, key, unit) {
       let temp = conditions.temp;
       let humidity = conditions.humidity;
       let windSpeed = data.list[0].wind.speed;
+      let condArray = [temp, humidity, windSpeed]
       // TODO:  append to main card
     });
 }
 
+// search data and pull out any data from noon
 function findNoon(string) {
   // string style "YYYY-MM-DD hh:mm:ss"
   let array = string.split("");
@@ -29,6 +31,7 @@ function findNoon(string) {
   }
 }
 
+// get the weather for the next five days
 function getFutureWeather(lat, lon, key, unit) {
   fetch(
     `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${key}&units=${unit}`
@@ -79,27 +82,79 @@ function getLatLon(city, key) {
 // function that pulls in the user input
 function getCityIn() {
   let cityIn = document.querySelector("#city-input");
-  let city = cityIn.value
-  storeCities(city)
-  cityIn.value = ''
+  let city = cityIn.value.trim();
+  if (city) {
+    storeCities(city);
+  }
+  cityIn.value = "";
   return city;
 }
+
 // take user input from doc and store in local memory
 function storeCities(city) {
   if (!localStorage.getItem("cities")) {
-    let cityStorage = []
-    cityStorage.push(city)
+    let cityStorage = [];
+    cityStorage.push(city);
     localStorage.setItem("cities", JSON.stringify(cityStorage));
-} else { 
-    let cityList = JSON.parse(localStorage.getItem("cities"))
-    console.log("cityList:", cityList)
-    cityList.push(city)
+  } else {
+    let cityList = JSON.parse(localStorage.getItem("cities"));
+    cityList.push(city);
     localStorage.setItem("cities", JSON.stringify(cityList));
-}}
+  }
+}
 
+// TODO: display current weather for searched city
+function diplayWeather(name, date, icon, condArray){
+  let weatherSec = document.querySelector('#weather-display')
+  let todayWeather = document.createElement('article')
+  let cityDateH1 = document.createElement('h1')
+  cityDateH1.textContent = `${name} (${date}) ${icon}`
+  
+  for (let i = 0; i < condArray.length; i++) {
+    let condLi = document.createElement("li");
+    condLi.textContent = cityList[i];
+    condLi.setAttribute(
+      "class",
+      "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded w-full my-3"
+    );
+    cityUl.appendChild(condLi);
+  }
+
+}
 
 
 // TODO: create five day forcast display
+
+
 // TODO: create card element to display date (MM/DD/YYYY), weather icon,
-//temp, wind, and humidity
+// temp, wind, and humidity
+
+
+
+
+
+// take cities key from memory and display whats stored
+function displayCities() {
+  let cityUl = document.querySelector("#saved-cities");
+
+  let cityList = JSON.parse(localStorage.getItem("cities"));
+
+  for (let i = 0; i < cityList.length; i++) {
+    let cityBtn = document.createElement("button");
+    cityBtn.textContent = cityList[i];
+    cityBtn.setAttribute(
+      "class",
+      "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded w-full my-3"
+    );
+    cityUl.appendChild(cityBtn);
+  }
+}
+
+// listen for searches and update cities and display
+let searchBtn = document.querySelector("#search-btn");
+searchBtn.addEventListener("click", function (){
+  getCityIn()
+  displayCities()
+});
+
 
