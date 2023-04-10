@@ -19,6 +19,38 @@ function getCurrentWeather(lat, lon, key, unit) {
       displayWeather(cityName, date, icon, temp, humidity, windSpeed);
     });
 }
+// display current weather for searched city
+function displayWeather(name, date, icon, temp, humidity, windSpeed) {
+  // hold todays weather and five day forcast
+  let weatherSec = document.querySelector("#weather-display");
+  weatherSec.textContent = "";
+  // create div for all of todays weather
+  let todayWeather = document.createElement("article");
+  // TODO: add styling to today's weather
+  todayWeather.setAttribute("class", "");
+
+  // create weather conditions list
+  let condUl = document.createElement("ul");
+  // header for today's weather
+  let cityDateH1 = document.createElement("h1");
+  cityDateH1.textContent = `${name} (${date}) ${icon}`;
+
+  let templi = document.createElement("li");
+  templi.textContent = `Temperature: ${Math.floor(temp)}℉`;
+  let humli = document.createElement("li");
+  humli.textContent = `Humidity: ${humidity}%`;
+  let windli = document.createElement("li");
+  windli.textContent = `Wind Speed: ${windSpeed}mph`;
+
+  // TODO: get icon from api
+
+  condUl.appendChild(templi);
+  condUl.appendChild(humli);
+  condUl.appendChild(windli);
+  weatherSec.appendChild(todayWeather);
+  todayWeather.appendChild(cityDateH1);
+  todayWeather.appendChild(condUl);
+}
 // get the weather for the next five days
 function getFutureWeather(lat, lon, key, unit) {
   fetch(
@@ -35,8 +67,7 @@ function getFutureWeather(lat, lon, key, unit) {
         if (findNoon(dt_text)) {
           storage.push(data.list[i]);
         }
-      }
-
+      } 
       // get variables for each day form storage
       for (let i = 0; i < storage.length; i++) {
         let date = dayjs(storage[i].dt_txt).format("MM/DD/YYYY");
@@ -45,59 +76,26 @@ function getFutureWeather(lat, lon, key, unit) {
         let humidity = storage[i].main.humidity;
         let windSpeed = storage[i].wind.speed;
         // TODO: append as multicard element
-        // displayWeatherCards()
+        displayWeatherCard(date, icon, temp, humidity, windSpeed)
       }
     });
-}
-// display current weather for searched city
-function displayWeather(name, date, icon, temp, humidity, windSpeed) {
-  
-  // hold todays weather and five day forcast
-  let weatherSec = document.querySelector("#weather-display");
-
-  // create div for all of todays weather
-  let todayWeather = document.createElement("article");
-  // TODO: add styling to today's weather
-  todayWeather.setAttribute("class", "");
-
-  // create weather conditions list
-  let condUl = document.createElement("ul");
-  // header for today's weather
-  let cityDateH1 = document.createElement("h1");
-  cityDateH1.textContent = `${name} (${date}) ${icon}`;
-  
-  let templi = document.createElement("li");
-  templi.textContent = `Temperature: ${Math.floor(temp)}℉`;
-  let humli = document.createElement("li");
-  humli.textContent = `Humidity: ${humidity}%`;
-  let windli = document.createElement("li");
-  windli.textContent = `Wind Speed: ${windSpeed}mph`;
-  
-  // TODO: get icon from api
-  
-  condUl.appendChild(templi);
-  condUl.appendChild(humli);
-  condUl.appendChild(windli);
-  weatherSec.appendChild(todayWeather);
-  todayWeather.appendChild(cityDateH1);
-  todayWeather.appendChild(condUl);
 }
 
 // TODO: create five day forÇcast display
 // TODO: create card element to display date (MM/DD/YYYY), weather icon,
 // temp, wind, and humidity
-function displayWeatherCards(date, icon, temp, humidity, windSpeed) {
-  
+function displayWeatherCard(date, icon, temp, humidity, windSpeed) {
   // hold todays weather and five day forcast
   let weatherSec = document.querySelector("#weather-display");
-
+  console.log("test")
   // create section for all cards
-  let weatherCards = document.createElement("section");
-  // TODO: add styling 
+  let weatherCard = document.createElement("section");
+  // TODO: add styling
 
- // create for loop to append elements to card
- 
-
+  let dateLi = document.createElement("li");
+  dateLi.textContent = date;
+  let iconImg = document.createElement("image");
+iconImg.textContent = icon
   let templi = document.createElement("li");
   templi.textContent = `Temperature: ${Math.floor(temp)}℉`;
   let humli = document.createElement("li");
@@ -107,12 +105,13 @@ function displayWeatherCards(date, icon, temp, humidity, windSpeed) {
 
   // TODO: get icon from api
 
-  condUl.appendChild(templi);
-  condUl.appendChild(humli);
-  condUl.appendChild(windli);
-  weatherSec.appendChild(todayWeather);
-  todayWeather.appendChild(cityDateH1);
-  todayWeather.appendChild(condUl);
+  weatherCard.appendChild(dateLi);
+  weatherCard.appendChild(iconImg);
+  weatherCard.appendChild(templi);
+  weatherCard.appendChild(humli);
+  weatherCard.appendChild(windli);
+  weatherSec.appendChild(weatherCard);
+  
 }
 // search data and pull out any data from noon
 function findNoon(string) {
@@ -124,8 +123,6 @@ function findNoon(string) {
     return false;
   }
 }
-
-
 
 // get the longitude and latitude for a city
 function getLatLon(city, key) {
@@ -160,20 +157,18 @@ function storeCities(city) {
     localStorage.setItem("cities", JSON.stringify(cityStorage));
   } else {
     let cityList = JSON.parse(localStorage.getItem("cities"));
-    if (!cityList.includes(city)){
-
+    if (!cityList.includes(city)) {
       cityList.push(city);
       localStorage.setItem("cities", JSON.stringify(cityList));
     }
   }
 }
 
-
 // take cities key from memory and display whats stored
 function displayCities() {
   let cityUl = document.querySelector("#saved-cities");
   // remove all buttons already displayed to prevent redundant buttons
-  cityUl.textContent = ''
+  cityUl.textContent = "";
   let cityList = JSON.parse(localStorage.getItem("cities"));
 
   for (let i = 0; i < cityList.length; i++) {
