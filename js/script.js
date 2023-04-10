@@ -21,13 +21,10 @@ function getCurrentWeather(lat, lon, key, unit) {
 }
 // display current weather for searched city
 function displayWeather(name, date, icon, temp, humidity, windSpeed) {
-  // hold todays weather and five day forcast
-  let weatherSec = document.querySelector("#weather-display");
-  weatherSec.textContent = "";
-  // create div for all of todays weather
-  let todayWeather = document.createElement("article");
+
+  let todayWeather = document.querySelector("#todays-weather-container");
+  todayWeather.textContent = "";
   // TODO: add styling to today's weather
-  todayWeather.setAttribute("class", "");
 
   // create weather conditions list
   let condUl = document.createElement("ul");
@@ -47,7 +44,6 @@ function displayWeather(name, date, icon, temp, humidity, windSpeed) {
   condUl.appendChild(templi);
   condUl.appendChild(humli);
   condUl.appendChild(windli);
-  weatherSec.appendChild(todayWeather);
   todayWeather.appendChild(cityDateH1);
   todayWeather.appendChild(condUl);
 }
@@ -81,12 +77,11 @@ function getFutureWeather(lat, lon, key, unit) {
 }
 
 function displayWeatherCard(date, icon, temp, humidity, windSpeed) {
-  // hold todays weather and five day forcast
-  let weatherSec = document.querySelector("#weather-display");
-  // create section for all cards
-  let weatherCard = document.createElement("section");
-  // TODO: add styling
 
+  let weatherCardContainer = document.querySelector("#five-day-container")
+  let weatherCard = document.createElement("section");
+
+  weatherCard.setAttribute('class', 'p-3 border-solid border-black')
   // TODO: get icon from api
 
   let dateLi = document.createElement("li");
@@ -105,7 +100,8 @@ function displayWeatherCard(date, icon, temp, humidity, windSpeed) {
   weatherCard.appendChild(templi);
   weatherCard.appendChild(humli);
   weatherCard.appendChild(windli);
-  weatherSec.appendChild(weatherCard);
+  weatherCardContainer.appendChild(weatherCard)
+  // weatherSec.appendChild(weatherCardContainer);
 }
 // search data and pull out any data from noon
 function findNoon(string) {
@@ -171,21 +167,22 @@ function displayCities() {
   // remove all buttons already displayed to prevent redundant buttons
   cityUl.textContent = "";
   let cityList = JSON.parse(localStorage.getItem("cities"));
-  if(cityList){
-  for (let i = 0; i < cityList.length; i++) {
-    let cityBtn = document.createElement("button");
-    cityBtn.setAttribute("id", "quick-search");
-    cityBtn.textContent = cityList[i];
-    cityBtn.setAttribute(
-      "class",
-      "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded w-full my-3"
-    );
+  if (cityList) {
+    for (let i = 0; i < cityList.length; i++) {
+      let cityBtn = document.createElement("button");
+      cityBtn.setAttribute("id", "quick-search");
+      cityBtn.textContent = cityList[i];
+      cityBtn.setAttribute(
+        "class",
+        "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded w-full my-3"
+      );
 
-    cityUl.appendChild(cityBtn);
-    cityBtn.addEventListener("click", function () {
-      getLatLon(quickSearch(), key);
-      displayCities();
-    });}
+      cityUl.appendChild(cityBtn);
+      cityBtn.addEventListener("click", function () {
+        getLatLon(quickSearch(), key);
+        displayCities();
+      });
+    }
   }
 }
 
