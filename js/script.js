@@ -67,7 +67,7 @@ function getFutureWeather(lat, lon, key, unit) {
         if (findNoon(dt_text)) {
           storage.push(data.list[i]);
         }
-      } 
+      }
       // get variables for each day form storage
       for (let i = 0; i < storage.length; i++) {
         let date = dayjs(storage[i].dt_txt).format("MM/DD/YYYY");
@@ -75,27 +75,24 @@ function getFutureWeather(lat, lon, key, unit) {
         let temp = storage[i].main.temp;
         let humidity = storage[i].main.humidity;
         let windSpeed = storage[i].wind.speed;
-        // TODO: append as multicard element
-        displayWeatherCard(date, icon, temp, humidity, windSpeed)
+        displayWeatherCard(date, icon, temp, humidity, windSpeed);
       }
     });
 }
 
-// TODO: create five day forÇcast display
-// TODO: create card element to display date (MM/DD/YYYY), weather icon,
-// temp, wind, and humidity
 function displayWeatherCard(date, icon, temp, humidity, windSpeed) {
   // hold todays weather and five day forcast
   let weatherSec = document.querySelector("#weather-display");
-  console.log("test")
   // create section for all cards
   let weatherCard = document.createElement("section");
   // TODO: add styling
 
+  // TODO: get icon from api
+
   let dateLi = document.createElement("li");
   dateLi.textContent = date;
   let iconImg = document.createElement("image");
-iconImg.textContent = icon
+  iconImg.textContent = icon;
   let templi = document.createElement("li");
   templi.textContent = `Temperature: ${Math.floor(temp)}℉`;
   let humli = document.createElement("li");
@@ -103,15 +100,12 @@ iconImg.textContent = icon
   let windli = document.createElement("li");
   windli.textContent = `Wind Speed: ${windSpeed}mph`;
 
-  // TODO: get icon from api
-
   weatherCard.appendChild(dateLi);
   weatherCard.appendChild(iconImg);
   weatherCard.appendChild(templi);
   weatherCard.appendChild(humli);
   weatherCard.appendChild(windli);
   weatherSec.appendChild(weatherCard);
-  
 }
 // search data and pull out any data from noon
 function findNoon(string) {
@@ -141,11 +135,18 @@ function getLatLon(city, key) {
 // function that pulls in the user input
 function getCityIn() {
   let cityIn = document.querySelector("#city-input");
+
   let city = cityIn.value.trim();
   if (city) {
     storeCities(city);
   }
   cityIn.value = "";
+  return city;
+}
+
+function quickSearch() {
+  let cityBtn = document.querySelector("#quick-search");
+  let city = cityBtn.textContent;
   return city;
 }
 
@@ -173,12 +174,18 @@ function displayCities() {
 
   for (let i = 0; i < cityList.length; i++) {
     let cityBtn = document.createElement("button");
+    cityBtn.setAttribute("id", "quick-search");
     cityBtn.textContent = cityList[i];
     cityBtn.setAttribute(
       "class",
       "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded w-full my-3"
     );
+
     cityUl.appendChild(cityBtn);
+    cityBtn.addEventListener("click", function () {
+      getLatLon(quickSearch(), key);
+      displayCities();
+    });
   }
 }
 
@@ -188,3 +195,5 @@ searchBtn.addEventListener("click", function () {
   getLatLon(getCityIn(), key);
   displayCities();
 });
+
+displayCities();
