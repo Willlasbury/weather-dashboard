@@ -31,7 +31,11 @@ function displayWeather(name, date, icon, temp, humidity, windSpeed) {
   let condUl = document.createElement("ul");
   // header for today's weather
   let cityDateH1 = document.createElement("h1");
-  cityDateH1.textContent = `${name} (${date}) ${icon}`;
+  let iconImg = document.createElement('img')
+  iconImg.setAttribute('alt', "image of the weather")
+  iconImg.setAttribute('src', `http://openweathermap.org/img/w/${icon}.png`)
+  cityDateH1.textContent = `${name} (${date})`;
+  
 
   let templi = document.createElement("li");
   templi.textContent = `Temperature: ${Math.floor(temp)}℉`;
@@ -41,11 +45,11 @@ function displayWeather(name, date, icon, temp, humidity, windSpeed) {
   windli.textContent = `Wind Speed: ${windSpeed}mph`;
 
   // TODO: get icon from api
-
   condUl.appendChild(templi);
   condUl.appendChild(humli);
   condUl.appendChild(windli);
   todayWeather.appendChild(cityDateH1);
+  todayWeather.appendChild(iconImg)
   todayWeather.appendChild(condUl);
 }
 // get the weather for the next five days
@@ -91,8 +95,9 @@ function displayWeatherCard(date, icon, temp, humidity, windSpeed) {
 
   let dateLi = document.createElement("li");
   dateLi.textContent = date;
-  let iconImg = document.createElement("image");
-  iconImg.textContent = icon;
+  let iconImg = document.createElement("img");
+  iconImg.setAttribute('alt', "image of the weather")
+  iconImg.setAttribute('src', `http://openweathermap.org/img/w/${icon}.png`)
   let templi = document.createElement("li");
   templi.textContent = `Temperature: ${Math.floor(temp)}℉`;
   let humli = document.createElement("li");
@@ -199,4 +204,11 @@ searchBtn.addEventListener("click", function () {
   displayCities();
 });
 
+
+function displayIcon (icon) {
+fetch(`http://openweathermap.org/img/w/${icon}.png`).then(function(response){
+ console.log("response:", response)
+})
+}
+displayIcon('10d')
 displayCities();
