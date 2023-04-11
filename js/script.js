@@ -19,6 +19,7 @@ function getCurrentWeather(lat, lon, key, unit) {
       displayWeather(cityName, date, icon, temp, humidity, windSpeed);
     });
 }
+
 // display current weather for searched city
 function displayWeather(name, date, icon, temp, humidity, windSpeed) {
 
@@ -65,6 +66,9 @@ function getFutureWeather(lat, lon, key, unit) {
         }
       }
       // get variables for each day form storage
+      if (document.querySelector('#five-day-container')){
+        document.querySelector('#five-day-container').innerHTML = ''
+      }
       for (let i = 0; i < storage.length; i++) {
         let date = dayjs(storage[i].dt_txt).format("MM/DD/YYYY");
         let icon = storage[i].weather[0].icon;
@@ -79,7 +83,7 @@ function getFutureWeather(lat, lon, key, unit) {
 function displayWeatherCard(date, icon, temp, humidity, windSpeed) {
 
   let weatherCardContainer = document.querySelector("#five-day-container")
-  // weatherCardContainer.textContent = ''
+  
   let weatherCard = document.createElement("section");
 
   weatherCard.setAttribute('class', 'p-3 border-solid border-black')
@@ -179,9 +183,8 @@ function displayCities() {
       );
 
       cityUl.appendChild(cityBtn);
-      cityBtn.addEventListener("click", function (target) {
-        let city = target.target.innerHTML
-        console.log("city:", target)
+      cityBtn.addEventListener("click", function (event) {
+        let city = event.target.innerHTML
         getLatLon(city, key);
         displayCities();
       });
