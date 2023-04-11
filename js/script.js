@@ -205,10 +205,4 @@ searchBtn.addEventListener("click", function () {
 });
 
 
-function displayIcon (icon) {
-fetch(`https://openweathermap.org/img/w/${icon}.png`).then(function(response){
- console.log("response:", response)
-})
-}
-displayIcon('10d')
 displayCities();
