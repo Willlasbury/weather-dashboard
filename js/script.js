@@ -79,6 +79,7 @@ function getFutureWeather(lat, lon, key, unit) {
 function displayWeatherCard(date, icon, temp, humidity, windSpeed) {
 
   let weatherCardContainer = document.querySelector("#five-day-container")
+  // weatherCardContainer.textContent = ''
   let weatherCard = document.createElement("section");
 
   weatherCard.setAttribute('class', 'p-3 border-solid border-black')
@@ -178,8 +179,10 @@ function displayCities() {
       );
 
       cityUl.appendChild(cityBtn);
-      cityBtn.addEventListener("click", function () {
-        getLatLon(quickSearch(), key);
+      cityBtn.addEventListener("click", function (target) {
+        let city = target.srcElement.innerHTML
+        console.log("city:", city)
+        getLatLon(city, key);
         displayCities();
       });
     }
