@@ -180,8 +180,8 @@ function displayCities() {
 
       cityUl.appendChild(cityBtn);
       cityBtn.addEventListener("click", function (target) {
-        let city = target.srcElement.innerHTML
-        console.log("city:", city)
+        let city = target.target.innerHTML
+        console.log("city:", target)
         getLatLon(city, key);
         displayCities();
       });
