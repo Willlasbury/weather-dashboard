@@ -205,4 +205,5 @@ searchBtn.addEventListener("click", function () {
 });
 
 
+
 displayCities();
