@@ -126,7 +126,7 @@ function findNoon(string) {
 
 // get the longitude and latitude for a city
 function getLatLon(city, key) {
-  fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${key}`)
+  fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${key}`)
     .then(function (response) {
       return response.json();
     })
@@ -206,7 +206,7 @@ searchBtn.addEventListener("click", function () {
 
 
 function displayIcon (icon) {
-fetch(`http://openweathermap.org/img/w/${icon}.png`).then(function(response){
+fetch(`https://openweathermap.org/img/w/${icon}.png`).then(function(response){
  console.log("response:", response)
 })
 }
