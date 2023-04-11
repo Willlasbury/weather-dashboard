@@ -5,27 +5,45 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link
+    <!-- <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-    />
+    /> -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="./css/style.css" />
   </head>
   <body>
-    <header>
-      <h1>Weather Dashboard</h1>
+    <header
+      class="flex justify-end bg-gradient-to-r from-cyan-500 to-blue-500 py-5"
+    >
+      <h1 class="text-5xl m-3 weight">Weather Dashboard</h1>
     </header>
-    <main class="row">
-      <section id="city-container">
-        <h2>Search for a city</h2>
+    <main class="flex bg-gray-400 h-screen">
+      <section
+        class="mx-8 flex basis-1/4 flex-col"
+        id="city-container"
+      >
+        <h2 class="text-2xl p-2 text-center">Search for a city</h2>
         <!-- make auto fill -->
-        <input id="city-input" type="text" name="city-search" placeholder="San Diego" />
-        <button onclick="getCityIn()">Search</button>
-        <ul id="saved-cities"></ul>
+        <input
+          class="bg-gray-50 border border-gray-300 text-md rounded-lg p-2.5 bg-gray-500 dark:border-gray-600 placeholder-gray-300 text-gray-300 mb-2"
+          id="city-input"
+          type="text"
+          name="city-search"
+          placeholder="San Diego"
+        />
+        <button id="search-btn"
+          class="bg-sky-500 hover:bg-sky-700 text-white font-bold py-2 px-4 border border-sky-700 rounded"
+        >
+          Search
+        </button>
+        <ul id="saved-cities" class="py-5 overflow-auto"></ul>
         <!-- add a list of saved cities -->
       </section>
-      <section id="weather-display">
+      <section class="flex flex-col basis-3/4 bg-blue-200" id="weather-display">
         <!-- add display box for current weather in desired city -->
+        <section id="todays-weather-container"></section>
+        <section id="five-day-container" class="flex w-full mx-2 my-3"></section>
         <!-- add a five day forcast for same city as above -->
       </section>
     </main>
